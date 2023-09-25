@@ -6,7 +6,7 @@ from torch import nn
 import transformers
 
 class EEGViT_pretrained(nn.Module):
-    def __init__(self):
+    def __init__(self, model_name):
         super().__init__()
         self.conv1 = nn.Conv2d(
             in_channels=1, 
@@ -18,9 +18,7 @@ class EEGViT_pretrained(nn.Module):
         )
         self.batchnorm1 = nn.BatchNorm2d(256, False)
 
-        #model_name = "google/vit-base-patch16-224"
-        model_name = 'google/vit-large-patch16-224-in21k'
-        
+
         config = transformers.ViTConfig.from_pretrained(model_name)
         config.update({'num_channels': 256})
         config.update({'image_size': (129,14)})
