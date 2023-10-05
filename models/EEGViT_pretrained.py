@@ -6,7 +6,7 @@ from torch import nn
 import transformers
 
 class EEGViT_pretrained(nn.Module):
-    def __init__(self, model_name, kernel1_y=32, kernel2_x=8, img_size_y=16):
+    def __init__(self, model_name, kernel1_y=32, kernel2_x=8, img_size_y=14):
         super().__init__()
         self.conv1 = nn.Conv2d(
             in_channels=1, 
