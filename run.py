@@ -2,6 +2,8 @@ from models.EEGViT_pretrained import EEGViT_pretrained
 from models.EEGViT import EEGViT_raw
 from models.ViTBase import ViTBase
 from models.ViTBase_pretrained import ViTBase_pretrained
+from models.EEGVit_TCNet import EEGVIT_TCN
+
 from helper_functions import split
 from dataset.EEGEyeNet import EEGEyeNetDataset
 import torch
@@ -13,7 +15,7 @@ import numpy as np
 '''
 models: EEGViT_pretrained; EEGViT_raw; ViTBase; ViTBase_pretrained
 '''
-model = EEGViT_pretrained()
+model = EEGVIT_TCN()
 EEGEyeNet = EEGEyeNetDataset('./dataset/Position_task_with_dots_synchronised_min.npz')
 batch_size = 64
 n_epoch = 15
