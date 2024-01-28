@@ -1,3 +1,8 @@
+
+
+
+Original repository:
+
 ## EEG-Vision Transformer (EEGViT)
 
 Accepted KDD 2023: https://arxiv.org/pdf/2308.00454.pdf
