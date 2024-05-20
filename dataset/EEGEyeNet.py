@@ -2,16 +2,23 @@ from torch.utils.data import Dataset
 import torch
 import numpy as np
 
-class EEGEyeNetDataset(Dataset):
-    def __init__(self, data_file,transpose = True):
+def __init__(self, data_file, transpose=True):
         self.data_file = data_file
         print('loading data...')
-        with np.load(self.data_file) as f: # Load the data array
+        with np.load(self.data_file) as f:  # Load the data array
             self.trainX = f['EEG']
             self.trainY = f['labels']
-        print(self.trainY)
+
+        # Filter data where y[:,1] is between 0 and 800 and y[:,2] is between 0 and 600
+        valid_indices = (self.trainY[:, 1] >= 0) & (self.trainY[:, 1] <= 800) & \
+                        (self.trainY[:, 2] >= 0) & (self.trainY[:, 2] <= 600)
+        self.trainX = self.trainX[valid_indices]
+        self.trainY = self.trainY[valid_indices]
+
         if transpose:
-            self.trainX = np.transpose(self.trainX, (0,2,1))[:,np.newaxis,:,:]
+            self.trainX = np.transpose(self.trainX, (0, 2, 1))[:, np.newaxis, :, :]
+
+        print(self.trainY)
 
     def __getitem__(self, index):
         # Read a single sample of data from the data array
