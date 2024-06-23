@@ -5,12 +5,13 @@ from models.ViTBase_pretrained import ViTBase_pretrained
 from models.EEGVit_TCNet import EEGVIT_TCN
 
 from helper_functions import split
-from dataset.EEGEyeNet import EEGEyeNetDataset
+from dataset.EEGEyeNetPruned import EEGEyeNetDataset
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Subset
 from tqdm import tqdm
 import numpy as np
+from customMED import MeanEuclideanDistance
 
 '''
 models: EEGViT_pretrained; EEGViT_raw; ViTBase; ViTBase_pretrained
@@ -21,7 +22,7 @@ batch_size = 64
 n_epoch = 15
 learning_rate = 1e-4
 
-criterion = nn.MSELoss()
+criterion = MeanEuclideanDistance()
 
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=6, gamma=0.1)
@@ -36,7 +37,7 @@ def train(model, optimizer, scheduler = None):
     torch.cuda.empty_cache()
     train_indices, val_indices, test_indices = split(EEGEyeNet.trainY[:,0],0.7,0.15,0.15)  # indices for the training set
     print('create dataloader...')
-    criterion = nn.MSELoss()
+    criterion = MeanEuclideanDistance()
 
     train = Subset(EEGEyeNet,indices=train_indices)
     val = Subset(EEGEyeNet,indices=val_indices)

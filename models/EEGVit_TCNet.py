@@ -4,7 +4,7 @@ from pytorch_tcn import TCN
 import transformers
 from transformers import ViTModel
 
-class EEGViT_pretrained(nn.Module):
+class EEGVIT_TCN(nn.Module):
     def __init__(self):
         super().__init__()
 
